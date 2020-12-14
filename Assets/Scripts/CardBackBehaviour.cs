@@ -4,20 +4,24 @@ using UnityEngine;
 
 public class CardBackBehaviour : MonoBehaviour
 {
+    private SpriteManager SpriteManager = SpriteManager.instance;
 
     public void ClickBehaviour()
     {
-        if (!transform.GetChild(0).gameObject.active)
+        GameObject frontOfCard = transform.GetChild(0).gameObject;
+        if (!frontOfCard.active)
         {
-            transform.GetChild(0).gameObject.SetActive(true);
+            frontOfCard.SetActive(true);
             CardFrontBehaviour cardFrontBehaviour = transform.GetChild(0).GetComponent<CardFrontBehaviour>();
             int spriteNumber = cardFrontBehaviour.getSpriteNumber();
-            if (SpriteManager.isHideable(spriteNumber, transform.GetChild(0).gameObject))
+            if (SpriteManager.hasNotSelectedFirst())
             {
-                StartCoroutine(SpriteManager.HideCoroutine(transform.GetChild(0).gameObject));
+                SpriteManager.setAsFirstSelected(spriteNumber, frontOfCard);
+            }
+            else if (SpriteManager.isHideable(spriteNumber))
+            {
+                StartCoroutine(SpriteManager.HideCoroutine(frontOfCard));
             }
         }
     }
-
-
 }

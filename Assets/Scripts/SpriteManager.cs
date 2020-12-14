@@ -8,15 +8,20 @@ using Random = UnityEngine.Random;
 
 public class SpriteManager : MonoBehaviour
 {
-    
-    private static int firstNumber;
-    private static GameObject firstObject;
+    public static SpriteManager instance;
+    private static int firstCardNumber;
+    private static GameObject firstCardGameObject;
     private static int parameterCount = 0;
-    private  static int[] positions = {0, 0, 1, 1, 2, 2, 3, 3};
-    
-    public static int[] getShuffledPositions()
+    private static int[] cardIndices = {0, 0, 1, 1, 2, 2, 3, 3};
+
+    void Awake()
     {
-        int[] newPositions = positions.Clone() as int[];
+        instance = this;
+    }
+
+    public int[] getShuffledCards()
+    {
+        int[] newPositions = cardIndices.Clone() as int[];
         for (int i = 0; i < newPositions.Length; i++)
         {
             int temp = newPositions[i];
@@ -24,47 +29,54 @@ public class SpriteManager : MonoBehaviour
             newPositions[i] = newPositions[r];
             newPositions[r] = temp;
         }
-
         return newPositions;
     }
 
-    public static bool isHideable(int spriteNumber, GameObject first)
+    public bool hasNotSelectedFirst()
     {
-        
+        return parameterCount == 0;
+    }
+
+    public void setAsFirstSelected(int firstNumber, GameObject firstCard)
+    {
+        firstCardGameObject = firstCard;
+        firstCardNumber = firstNumber;
+        parameterCount++;
+    }
+
+
+    public bool isHideable(int currentCardNumber)
+    {
         parameterCount++;
         if (parameterCount > 2)
         {
             return true;
         }
-        if (parameterCount == 2 && spriteNumber != firstNumber)
+
+        if (parameterCount == 2 && currentCardNumber != firstCardNumber)
         {
-            firstObject.SetActive(false);
+            StartCoroutine(HideCoroutine(firstCardGameObject));
             parameterCount = 0;
             return true;
         }
-        if (parameterCount == 2 & spriteNumber == firstNumber)
+
+        if (parameterCount == 2 & currentCardNumber == firstCardNumber)
         {
             parameterCount = 0;
             IncrementScore();
-            Debug.Log("score imcrem");
             return false;
         }
-        if (parameterCount == 1)
-        {
-            firstNumber = spriteNumber;
-            firstObject = first;
-        }
-
         return false;
     }
 
-    
-    public static IEnumerator HideCoroutine(GameObject cardToHide)
+
+    public IEnumerator HideCoroutine(GameObject cardToHide)
     {
         yield return new WaitForSeconds(1);
         cardToHide.SetActive(false);
     }
-    public static void IncrementScore()
+
+    public void IncrementScore()
     {
         
     }

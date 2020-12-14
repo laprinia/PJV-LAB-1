@@ -12,7 +12,7 @@ public class CardFrontBehaviour : MonoBehaviour
     public Sprite lovers;
     public Sprite fool;
     private int spriteNumber;
-   
+
 
     public int getSpriteNumber()
     {
@@ -23,8 +23,8 @@ public class CardFrontBehaviour : MonoBehaviour
     {
         GetComponent<Image>().sprite = GetSprite(number);
         spriteNumber = number;
-
     }
+
     public Sprite GetSprite(int number)
     {
         switch (number)
@@ -46,6 +46,4 @@ public class CardFrontBehaviour : MonoBehaviour
                 break;
         }
     }
-    
-
 }

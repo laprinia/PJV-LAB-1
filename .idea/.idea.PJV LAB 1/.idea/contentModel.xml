@@ -7,11 +7,10 @@
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="Scripts" t="Include">
-          <e p="BackCardBehaviour.cs" t="Include" />
           <e p="CardBackBehaviour.cs" t="Include" />
           <e p="CardFrontBehaviour.cs" t="Include" />
+          <e p="CardInstantiator.cs" t="Include" />
           <e p="SpriteManager.cs" t="Include" />
-          <e p="TableInit.cs" t="Include" />
         </e>
       </e>
       <e p="obj" t="ExcludeRecursive" />
