@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class SpriteManager : MonoBehaviour
 {
+    private int gameScore;
+    public Text scoreText;
     public static SpriteManager instance;
     private static int firstCardNumber;
     private static GameObject firstCardGameObject;
@@ -78,6 +81,7 @@ public class SpriteManager : MonoBehaviour
 
     public void IncrementScore()
     {
-        
+        gameScore+=10;
+        scoreText.text ="SCORE: " + gameScore;
     }
 }
