@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CardBackBehaviour : MonoBehaviour
 {
-    private SpriteManager SpriteManager = SpriteManager.instance;
+    private GameManager _gameManager = GameManager.instance;
 
     public void ClickBehaviour()
     {
@@ -14,13 +14,13 @@ public class CardBackBehaviour : MonoBehaviour
             frontOfCard.SetActive(true);
             CardFrontBehaviour cardFrontBehaviour = transform.GetChild(0).GetComponent<CardFrontBehaviour>();
             int spriteNumber = cardFrontBehaviour.getSpriteNumber();
-            if (SpriteManager.hasNotSelectedFirst())
+            if (_gameManager.hasNotSelectedFirst())
             {
-                SpriteManager.setAsFirstSelected(spriteNumber, frontOfCard);
+                _gameManager.setAsFirstSelected(spriteNumber, frontOfCard);
             }
-            else if (SpriteManager.isHideable(spriteNumber))
+            else if (_gameManager.isHideable(spriteNumber))
             {
-                StartCoroutine(SpriteManager.HideCoroutine(frontOfCard));
+                StartCoroutine(_gameManager.HideCoroutine(frontOfCard));
             }
         }
     }

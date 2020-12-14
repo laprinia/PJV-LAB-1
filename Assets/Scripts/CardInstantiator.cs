@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class CardInstantiator : MonoBehaviour
 {
     private ArrayList _backArrayList = new ArrayList();
-    private int xOffset = 0;
-    private int yOffset = 0;
+    private int xOffset;
+    private int yOffset;
     public int xPace = 150;
     public int yPace = 300;
     public Transform cardsTransform;
@@ -18,17 +18,29 @@ public class CardInstantiator : MonoBehaviour
     void Start()
     {
         AddCardBacks();
+        AddCardFronts();
         Destroy(cardBack);
-        int[] shuffledPositions = SpriteManager.instance.getShuffledCards();
+    }
+
+    public void AddCardFronts()
+    {
+        int[] shuffledPositions = CardIndexShuffler.getShuffledIndices();
         int i = 0;
         foreach (GameObject backCard in _backArrayList)
         {
+            if (backCard.transform.childCount > 0)
+            {
+                Destroy(backCard.transform.GetChild(0).gameObject);
+            }
+
             GameObject frontCard = Instantiate(cardFront, backCard.transform.position, Quaternion.identity,
                 backCard.transform);
             frontCard.GetComponent<CardFrontBehaviour>().setSprite(shuffledPositions[i]);
-            i++;
             frontCard.SetActive(false);
+            i++;
         }
+
+        GameManager.instance.ResetGame();
     }
 
     void AddCardBacks()

@@ -7,66 +7,68 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class SpriteManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     private int gameScore;
     public Text scoreText;
-    public static SpriteManager instance;
+    public static GameManager instance;
     private static int firstCardNumber;
     private static GameObject firstCardGameObject;
-    private static int parameterCount = 0;
-    private static int[] cardIndices = {0, 0, 1, 1, 2, 2, 3, 3};
+    private static int currentSelectionParameterCount;
+    
 
     void Awake()
     {
         instance = this;
     }
 
-    public int[] getShuffledCards()
+    public void ResetGame()
     {
-        int[] newPositions = cardIndices.Clone() as int[];
-        for (int i = 0; i < newPositions.Length; i++)
-        {
-            int temp = newPositions[i];
-            int r = Random.Range(i, newPositions.Length);
-            newPositions[i] = newPositions[r];
-            newPositions[r] = temp;
-        }
-        return newPositions;
+        gameScore = 0;
+        scoreText.text = "SCORE: 0";
+        currentSelectionParameterCount = 0;
+
     }
+
+    
 
     public bool hasNotSelectedFirst()
     {
-        return parameterCount == 0;
+        return currentSelectionParameterCount == 0;
     }
 
     public void setAsFirstSelected(int firstNumber, GameObject firstCard)
     {
         firstCardGameObject = firstCard;
         firstCardNumber = firstNumber;
-        parameterCount++;
+        currentSelectionParameterCount++;
     }
 
 
     public bool isHideable(int currentCardNumber)
     {
-        parameterCount++;
-        if (parameterCount > 2)
+        currentSelectionParameterCount++;
+        if (currentSelectionParameterCount > 2)
         {
             return true;
         }
 
-        if (parameterCount == 2 && currentCardNumber != firstCardNumber)
+        if (currentSelectionParameterCount == 2 && currentCardNumber != firstCardNumber)
         {
             StartCoroutine(HideCoroutine(firstCardGameObject));
-            parameterCount = 0;
+            currentSelectionParameterCount = 0;
+            if (gameScore > 0)
+            {
+                UpdateScore(-5);
+            }
+            
             return true;
         }
 
-        if (parameterCount == 2 & currentCardNumber == firstCardNumber)
+        if (currentSelectionParameterCount == 2 & currentCardNumber == firstCardNumber)
         {
-            parameterCount = 0;
-            IncrementScore();
+            currentSelectionParameterCount = 0;
+            UpdateScore(20);
             return false;
         }
         return false;
@@ -79,9 +81,9 @@ public class SpriteManager : MonoBehaviour
         cardToHide.SetActive(false);
     }
 
-    public void IncrementScore()
+    public void UpdateScore(int score)
     {
-        gameScore+=10;
+        gameScore+=score;
         scoreText.text ="SCORE: " + gameScore;
     }
 }

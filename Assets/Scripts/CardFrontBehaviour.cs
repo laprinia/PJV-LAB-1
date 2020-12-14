@@ -31,19 +31,19 @@ public class CardFrontBehaviour : MonoBehaviour
         {
             case 0:
                 return death;
-                break;
+            
             case 1:
                 return hermit;
-                break;
+           
             case 2:
                 return lovers;
-                break;
+             
             case 3:
                 return fool;
-                break;
+               
             default:
                 return death;
-                break;
+         
         }
     }
 }

@@ -9,8 +9,10 @@
         <e p="Scripts" t="Include">
           <e p="CardBackBehaviour.cs" t="Include" />
           <e p="CardFrontBehaviour.cs" t="Include" />
+          <e p="CardIndexShuffler.cs" t="Include" />
           <e p="CardInstantiator.cs" t="Include" />
-          <e p="SpriteManager.cs" t="Include" />
+          <e p="GameManager.cs" t="Include" />
+          <e p="ResetButtonBehaviour.cs" t="Include" />
         </e>
       </e>
       <e p="obj" t="ExcludeRecursive" />
