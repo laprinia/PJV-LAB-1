@@ -9,4 +9,4 @@
 
 ### 📷Screenshot:
 
-![game screenshot](screenshots/screenshot.png "Tarot Matching Game")
+![game screenshot](/screenshots/screenshot.PNG "Tarot Matching Game")
